@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProsperDaily.MVVM.View.DashboardPage"
+             Title="DashboardPage"
+             BackgroundColor="White">
+
+    <Grid RowDefinitions=".15*,.15*,.15*,.55*">
+        <RoundRectangle Grid.RowSpan="2" StyleClass="TopRectangle"></RoundRectangle>
+        <VerticalStackLayout StyleClass="Header">
+            <Label StyleClass="HeaderTitle" Text="Good Morning, "/>
+            <Label StyleClass="HeaderSubTitle" Text="Mayank Gour"/>
+        </VerticalStackLayout>
+
+        <Grid
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            StyleClass="BalancedGrid">
+            <RoundRectangle StyleClass="BalanceRectangle"></RoundRectangle>
+
+            <Grid ColumnDefinitions="*,*"
+                  RowDefinitions=".333*,.333*,.333*"
+                  StyleClass="Padding25">
+
+                <VerticalStackLayout>
+                    <Label Text="Total Balance"/>
+                    <Label StyleClass="StrongTitle" Text="{Binding Balance,StringFormat='{0:C}'}"/>
+                    
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="2">
+                    <Label Text="Income"/>
+                    <Label StyleClass="StrongSubTitle" Text="{Binding Income,StringFormat='{0:C}'}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    HorizontalOptions="Center">
+                    <Label Text="Expenses"/>
+                    <Label StyleClass="StrongSubTitle" Text="{Binding Expenses,StringFormat='{0:C}'}"/>
+                </VerticalStackLayout>
+                
+                
+            </Grid>
+        </Grid>
+
+        <Button
+            Grid.Row="2"
+            StyleClass="CircularButton"
+            Text="+" TextColor="Black"
+            x:Name="AddTransaction"
+            Clicked="AddTransaction_Clicked"/>
+
+        <Grid
+            Grid.Row="3"
+            RowDefinitions=".1*,.9*"
+            StyleClass="Margin15">
+            <Label Text="Transaction"></Label>
+
+            <CollectionView
+                Grid.Row="1"
+                EmptyView="No Data"
+                ItemsSource="{Binding Transactions}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="15" Orientation="Vertical"></LinearItemsLayout>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.EmptyViewTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Label StyleClass="NoDataText"
+                                   Text="No data found, click on the + button to add a new transaction"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.EmptyViewTemplate>
+
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,*"
+              RowDefinitions="*,*">
+                            <Label StyleClass="StrongMediumTitle" Text="{Binding Name}"/>
+                            <Label Grid.Row="1"
+                   StyleClass="SmallFont"
+                   Text="{Binding OperationDate, StringFormat='{0:MM/dd/yyyy}'}"/>
+                            <Label Grid.RowSpan="2"
+                   Grid.Column="1"
+                   StyleClass="ListAmount"
+                   Text="{Binding Amount, StringFormat='{0:C}'}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+            
+        </Grid>
+
+    </Grid>
+</ContentPage>
